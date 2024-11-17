@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import PokemonDropdown from "./PokemonDropdown";
 import PokemonDetails from "./PokemonDetails";
+import Loading from "./Loading";
 
 export default function PokemonApplication() {
   const [data, setData] = useState(null); //pokemons list
@@ -22,7 +23,9 @@ export default function PokemonApplication() {
         console.error(error.message);
       }
     };
-    getData();
+    setTimeout(() => {
+      getData();
+    }, 1500);
   }, []);
 
   useEffect(() => {
@@ -41,7 +44,7 @@ export default function PokemonApplication() {
   }, [selectedPokemon]);
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   return (
     <div className=" flex flex-col items-center">

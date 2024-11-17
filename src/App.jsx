@@ -20,7 +20,7 @@ function App() {
     setStart(!start);
   };
   return (
-    <div className="flex flex-col items-center">
+    <div className="py-10 h-full flex flex-col items-center">
       <h1 className="text-5xl font-bold mt-10 mb-5">Pokedex</h1>
       <ButtonStart start={start} handleStart={handleStart} />
       {start && <PokemonApplication />}
