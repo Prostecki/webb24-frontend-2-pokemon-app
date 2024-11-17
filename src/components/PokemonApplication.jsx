@@ -25,7 +25,7 @@ export default function PokemonApplication() {
     };
     setTimeout(() => {
       getData();
-    }, 1500);
+    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function PokemonApplication() {
           const details = await response.json();
           setTimeout(() => {
             setPokemonDetails(details);
-          }, 1000);
+          }, 500);
         } catch (error) {
           console.error(error.message);
         }
