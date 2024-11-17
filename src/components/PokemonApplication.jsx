@@ -3,7 +3,6 @@ import Pokemon from "./Pokemon";
 
 export default function PokemonApplication() {
   const [data, setData] = useState(null);
-  const [pokemons, setPokemons] = useState(null);
   useEffect(() => {
     const getData = async () => {
       try {
@@ -14,7 +13,6 @@ export default function PokemonApplication() {
           throw new Error("Response status", response.status);
         }
         const json = await response.json();
-        console.log(json);
         setData(json.results);
       } catch (error) {
         console.error(error.message);
@@ -27,7 +25,7 @@ export default function PokemonApplication() {
     return <div>Loading...</div>;
   }
   return (
-    <div>
+    <div className="flex flex-wrap">
       {data.map((item, i) => (
         <Pokemon key={i} item={item} />
       ))}

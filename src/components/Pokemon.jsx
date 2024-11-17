@@ -1,4 +1,7 @@
 export default function Pokemon({ item }) {
-  console.log(item);
-  return <h1>{item.name}</h1>;
+  return (
+    <div className="w-48 border-2 m-10 text-center p-5 rounded-xl">
+      <p>{item.name}</p>
+    </div>
+  );
 }
