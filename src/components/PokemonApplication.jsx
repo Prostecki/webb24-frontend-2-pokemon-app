@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import Pokemon from "./Pokemon";
+
+import PokemonDropdown from "./PokemonDropdown";
+import PokemonDetails from "./PokemonDetails";
 
 export default function PokemonApplication() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(null); //pokemons list
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [pokemonDetails, setPokemonDetails] = useState(null); // details of choosen pokemon
   useEffect(() => {
     const getData = async () => {
       try {
@@ -13,7 +17,7 @@ export default function PokemonApplication() {
           throw new Error("Response status", response.status);
         }
         const json = await response.json();
-        setData(json.results);
+        setData(json.results.sort((a, b) => (a.name > b.name ? 1 : -1)));
       } catch (error) {
         console.error(error.message);
       }
@@ -21,14 +25,29 @@ export default function PokemonApplication() {
     getData();
   }, []);
 
+  useEffect(() => {
+    if (selectedPokemon) {
+      const fetchDetails = async () => {
+        try {
+          const response = await fetch(selectedPokemon.url);
+          const details = await response.json();
+          setPokemonDetails(details);
+        } catch (error) {
+          console.error(error.message);
+        }
+      };
+      fetchDetails();
+    }
+  }, [selectedPokemon]);
+
   if (!data) {
     return <div>Loading...</div>;
   }
   return (
-    <div className="flex flex-wrap">
-      {data.map((item, i) => (
-        <Pokemon key={i} item={item} />
-      ))}
+    <div className=" flex flex-col items-center">
+      <h1 className="text-2xl font-bold mb-4">Select a Pokemon</h1>
+      <PokemonDropdown data={data} onSelect={setSelectedPokemon} />
+      {pokemonDetails && <PokemonDetails details={pokemonDetails} />}
     </div>
   );
 }

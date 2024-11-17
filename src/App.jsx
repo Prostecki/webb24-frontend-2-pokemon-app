@@ -21,7 +21,7 @@ function App() {
   };
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-5xl font-bold my-10">Pokemon App</h1>
+      <h1 className="text-5xl font-bold mt-10 mb-5">Pokedex</h1>
       <ButtonStart start={start} handleStart={handleStart} />
       {start && <PokemonApplication />}
     </div>
