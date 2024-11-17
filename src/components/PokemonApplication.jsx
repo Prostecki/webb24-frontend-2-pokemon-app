@@ -34,7 +34,9 @@ export default function PokemonApplication() {
         try {
           const response = await fetch(selectedPokemon.url);
           const details = await response.json();
-          setPokemonDetails(details);
+          setTimeout(() => {
+            setPokemonDetails(details);
+          }, 1000);
         } catch (error) {
           console.error(error.message);
         }
@@ -47,7 +49,7 @@ export default function PokemonApplication() {
     return <Loading />;
   }
   return (
-    <div className=" flex flex-col items-center">
+    <div className="transition-shadow flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-4">Select a Pokemon</h1>
       <PokemonDropdown data={data} onSelect={setSelectedPokemon} />
       {pokemonDetails && <PokemonDetails details={pokemonDetails} />}

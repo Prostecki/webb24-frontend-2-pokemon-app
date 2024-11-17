@@ -17,29 +17,52 @@ function PokemonDetails({ details }) {
     dark: "bg-gray-800",
     steel: "bg-gray-400",
     flying: "bg-sky-500",
+    ground: "bg-yellow-900",
   };
   const backgroundColorClass =
     details.types.map((type) => typeColors[type.type.name]).join(" ") ||
     "bg-gray-200";
+
+  const capitalize = (str) => {
+    if (!str) return "";
+    return str[0].toUpperCase() + str.slice(1).toLowerCase();
+  };
   console.log(details);
   return (
     <div
-      className={`relative flex flex-col justify-end border-[1px] rounded-md shadow-xl border-black text-center p-0 h-[500px] w-[500px] ${backgroundColorClass}`}
+      className={`relative flex flex-col justify-end rounded-xl border-2 shadow-lg ${backgroundColorClass} text-center p-5 w-[400px] mx-auto`}
     >
       <img
-        className="w-[200px] object-contain mb-4 absolute top-10 left-40"
+        className="w-[200px] h-[200px] object-contain mb-5 mx-auto border-4 rounded-lg shadow-lg"
         src={details.sprites.other["official-artwork"].front_default}
         alt={details.name}
       />
-      <div className="h-[350px] rounded-t-3xl box-border flex flex-col justify-end gap-5 bg-white rounded">
-        <h2 className="text-xl font-semibold">{details.name}</h2>
-        <p>Height: {details.height}</p>
-        <p>Weight: {details.weight}</p>
-        <div>
-          Types:
-          {details.types.map((type, i) => (
-            <p key={i}>{type.type.name}</p>
-          ))}
+      <div className="flex flex-col gap-4 bg-white rounded-lg p-4 shadow-lg">
+        <h2 className="text-2xl font-semibold text-gray-800">
+          {capitalize(details.name)}
+        </h2>
+        <div className="text-gray-600">
+          <p className="text-lg font-medium">
+            Height: {details.height} decimetres
+          </p>
+          <p className="text-lg font-medium">
+            Weight: {details.weight} hectograms
+          </p>
+        </div>
+        <div className="text-gray-600">
+          <h3 className="text-lg font-semibold">Types:</h3>
+          <div className="flex flex-wrap gap-2 justify-center">
+            {details.types.map((type, i) => (
+              <span
+                key={i}
+                className={`text-white py-1 px-4 mt-3 rounded-full ${
+                  typeColors[type.type.name]
+                }`}
+              >
+                {capitalize(type.type.name)}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>

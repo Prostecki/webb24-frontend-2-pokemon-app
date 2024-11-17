@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ButtonStart from "./components/ButtonStart";
 
 function App() {
+  const pokedexImg = "https://ik.imagekit.io/hwyksvj4iv/pokedex_N_WgWrJK0s.png";
   const [start, setStart] = useState(false);
   useEffect(() => {
     if (start) {
@@ -21,7 +22,7 @@ function App() {
   };
   return (
     <div className="py-10 h-full flex flex-col items-center">
-      <h1 className="text-5xl font-bold mt-10 mb-5">Pokedex</h1>
+      <img className="w-60" src={pokedexImg} alt="" />
       <ButtonStart start={start} handleStart={handleStart} />
       {start && <PokemonApplication />}
     </div>
