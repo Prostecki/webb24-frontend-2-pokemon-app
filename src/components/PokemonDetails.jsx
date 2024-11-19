@@ -1,4 +1,7 @@
 import { useState } from "react";
+import PokemonImageSwitcher from "./PokemonImageSwitcher";
+import PokemonInfo from "./Pokemoninfo";
+import PokemonTypes from "./Pokemontypes";
 
 function PokemonDetails({ details }) {
   const [show, setShow] = useState(false);
@@ -22,73 +25,26 @@ function PokemonDetails({ details }) {
     flying: "bg-sky-500",
     ground: "bg-yellow-900",
   };
-  const backgroundColorClass =
-    details.types.map((type) => typeColors[type.type.name]).join(" ") ||
-    "bg-gray-200";
 
-  const capitalize = (str) => {
-    if (!str) return "";
-    return str[0].toUpperCase() + str.slice(1).toLowerCase();
-  };
-  console.log(details);
+  const mainType = details.types[0]?.type?.name || "normal";
+  const containerColor = typeColors[mainType] || "bg-gray-200";
   return (
     <div
-      className={`relative flex flex-col justify-end rounded-xl border-2 shadow-lg ${backgroundColorClass} text-center p-5 w-[400px] mx-auto`}
+      className={`relative flex flex-col justify-end rounded-xl border-2 shadow-lg bg-gray-200 text-center p-5 w-[400px] mx-auto ${containerColor}`}
     >
-      <div className="flex items-center">
-        <button
-          onClick={() => setShow(!show)}
-          className="hover:bg-white animate-bounce shadow-gray-400 flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 transition-all border border-gray-300 shadow-sm"
-        >
-          <span className="text-xs">&#9664;</span>{" "}
-        </button>
-        {show ? (
-          <img
-            className="w-[150px] h-[150px] object-contain mb-5 mx-auto border-2 rounded-lg shadow-lg"
-            src={details.sprites.other.showdown.front_default}
-            alt={details.name}
-          />
-        ) : (
-          <img
-            className="w-[150px] h-[150px] object-contain mb-5 mx-auto border-2 rounded-lg shadow-lg"
-            src={details.sprites.other.showdown.back_default}
-            alt={details.name}
-          />
-        )}
-        <button
-          onClick={() => setShow(!show)}
-          className="hover:bg-white animate-bounce shadow-gray-400 flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 transition-all border border-gray-300 shadow-sm"
-        >
-          <span className="text-xs">&#9654;</span>{" "}
-        </button>
-      </div>
+      <PokemonImageSwitcher
+        frontImage={details.sprites.other.showdown.front_default}
+        backImage={details.sprites.other.showdown.back_default}
+        show={show}
+        onToggle={() => setShow(!show)}
+      />
       <div className="flex flex-col gap-4 bg-white rounded-lg p-4 shadow-lg">
-        <h2 className="text-2xl font-semibold text-gray-800">
-          {capitalize(details.name)}
-        </h2>
-        <div className="text-gray-600">
-          <p className="text-lg font-medium">
-            Height: {details.height} decimetres
-          </p>
-          <p className="text-lg font-medium">
-            Weight: {details.weight} hectograms
-          </p>
-        </div>
-        <div className="text-gray-600">
-          <h3 className="text-lg font-semibold">Types:</h3>
-          <div className="flex flex-wrap gap-2 justify-center">
-            {details.types.map((type, i) => (
-              <span
-                key={i}
-                className={`text-white py-1 px-4 mt-3 rounded-full ${
-                  typeColors[type.type.name]
-                }`}
-              >
-                {capitalize(type.type.name)}
-              </span>
-            ))}
-          </div>
-        </div>
+        <PokemonInfo
+          name={details.name}
+          height={details.height}
+          weight={details.weight}
+        />
+        <PokemonTypes types={details.types} typeColors={typeColors} />
       </div>
     </div>
   );

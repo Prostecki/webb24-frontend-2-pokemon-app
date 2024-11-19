@@ -21,7 +21,13 @@ function App() {
     setStart(!start);
   };
   return (
-    <div className="py-10 h-full flex flex-col items-center">
+    <div
+      className={`py-10 h-full flex flex-col items-center ${
+        start
+          ? "bg-white transition-all duration-[500ms]"
+          : "bg-black transition-all duration-[500ms]"
+      }`}
+    >
       <img className="w-60" src={pokedexImg} alt="" />
       <ButtonStart start={start} handleStart={handleStart} />
       {start && <PokemonApplication />}
