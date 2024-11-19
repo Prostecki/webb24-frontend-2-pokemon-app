@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 function PokemonDetails({ details }) {
+  const [show, setShow] = useState(false);
   const typeColors = {
     fire: "bg-red-500",
     water: "bg-blue-500",
@@ -32,11 +35,33 @@ function PokemonDetails({ details }) {
     <div
       className={`relative flex flex-col justify-end rounded-xl border-2 shadow-lg ${backgroundColorClass} text-center p-5 w-[400px] mx-auto`}
     >
-      <img
-        className="w-[200px] h-[200px] object-contain mb-5 mx-auto border-4 rounded-lg shadow-lg"
-        src={details.sprites.other["official-artwork"].front_default}
-        alt={details.name}
-      />
+      <div className="flex items-center">
+        <button
+          onClick={() => setShow(!show)}
+          className="hover:bg-white animate-bounce shadow-gray-400 flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 transition-all border border-gray-300 shadow-sm"
+        >
+          <span className="text-xs">&#9664;</span>{" "}
+        </button>
+        {show ? (
+          <img
+            className="w-[150px] h-[150px] object-contain mb-5 mx-auto border-2 rounded-lg shadow-lg"
+            src={details.sprites.other.showdown.front_default}
+            alt={details.name}
+          />
+        ) : (
+          <img
+            className="w-[150px] h-[150px] object-contain mb-5 mx-auto border-2 rounded-lg shadow-lg"
+            src={details.sprites.other.showdown.back_default}
+            alt={details.name}
+          />
+        )}
+        <button
+          onClick={() => setShow(!show)}
+          className="hover:bg-white animate-bounce shadow-gray-400 flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 transition-all border border-gray-300 shadow-sm"
+        >
+          <span className="text-xs">&#9654;</span>{" "}
+        </button>
+      </div>
       <div className="flex flex-col gap-4 bg-white rounded-lg p-4 shadow-lg">
         <h2 className="text-2xl font-semibold text-gray-800">
           {capitalize(details.name)}
