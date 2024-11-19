@@ -26,3 +26,5 @@ A React application to display detailed information about Pokémon, including th
 1. Install dependencies:
    ```bash
    npm install
+   npm run dev
+   Open http://localhost in your browser from terminal link
